@@ -61,7 +61,7 @@ export default function SleepoverHistoryPage() {
   );
 
   const completedRequests = requests.filter(request => 
-    request.signOutTime || request.status === 'completed' || request.status === 'rejected'
+    request.signOutTime || request.status === 'rejected' || request.status === 'denied'
   );
 
   if (!user) {
