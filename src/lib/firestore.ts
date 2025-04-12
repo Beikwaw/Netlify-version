@@ -1698,10 +1698,10 @@ export const generateDetailedReport = async (tenantCode: string, date: Date): Pr
       const data = doc.data();
       return {
         id: doc.id,
-        title: data.title || '',
-        description: data.description || '',
+        studentName: data.studentName || '',
+        date: convertTimestampToDate(data.createdAt),
         status: data.status === MaintenanceStatus.COMPLETED ? 'resolved' : data.status === MaintenanceStatus.DENIED ? 'denied' : 'pending',
-        createdAt: convertTimestampToDate(data.createdAt)
+        details: data.description || ''
       };
     });
 
@@ -1717,10 +1717,10 @@ export const generateDetailedReport = async (tenantCode: string, date: Date): Pr
       const data = doc.data();
       return {
         id: doc.id,
-        title: data.title || '',
-        description: data.description || '',
+        studentName: data.studentName || '',
+        date: convertTimestampToDate(data.createdAt),
         status: data.status === ComplaintStatus.RESOLVED ? 'resolved' : data.status === ComplaintStatus.DENIED ? 'denied' : 'pending',
-        createdAt: convertTimestampToDate(data.createdAt)
+        details: data.description || ''
       };
     });
 
