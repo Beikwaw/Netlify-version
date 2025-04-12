@@ -170,7 +170,7 @@ export default function SleepoverHistoryPage() {
                   <p><strong>Submitted:</strong> {format(convertTimestampToDate(request.createdAt), 'PPP p')}</p>
                   {request.signOutTime && (
                     <div className="mt-2 p-3 bg-green-50 rounded-md">
-                      <p><strong>Checked Out:</strong> {format(new Date(request.signOutTime), 'PPP p')}</p>
+                      <p><strong>Checked Out:</strong> {format(convertTimestampToDate(request.signOutTime), 'PPP p')}</p>
                     </div>
                   )}
                   {request.adminResponse && (
