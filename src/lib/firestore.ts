@@ -316,10 +316,11 @@ export interface GuestData {
 }
 
 // Helper function to convert Timestamp to Date
-const convertTimestampToDate = (timestamp: Timestamp | Date | undefined): Date => {
+export const convertTimestampToDate = (timestamp: Timestamp | Date | undefined): Date => {
   if (!timestamp) return new Date();
+  if (timestamp instanceof Timestamp) return timestamp.toDate();
   if (timestamp instanceof Date) return timestamp;
-  return timestamp.toDate();
+  return new Date(timestamp);
 };
 
 // Helper function to convert Date to Timestamp
