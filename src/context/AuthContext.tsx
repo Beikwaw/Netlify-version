@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useEffect, useState } from 'react';
-import { User, onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth';
+import { User, onAuthStateChanged, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
 import { UserData, AdminData, getAdminByUserId } from '@/lib/firestore';
 
@@ -10,6 +10,7 @@ interface AuthContextType {
   userData: UserData | null;
   loading: boolean;
   login: (email: string, password: string, role?: string, rememberMe?: boolean) => Promise<UserData | AdminData>;
+  logout: () => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType>({
@@ -18,6 +19,9 @@ const AuthContext = createContext<AuthContextType>({
   loading: true,
   login: async () => {
     throw new Error('Login function not implemented');
+  },
+  logout: async () => {
+    throw new Error('Logout function not implemented');
   },
 });
 
@@ -54,6 +58,17 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
   };
 
+  const logout = async () => {
+    try {
+      await signOut(auth);
+      setUser(null);
+      setUserData(null);
+    } catch (error) {
+      console.error('Logout error:', error);
+      throw error;
+    }
+  };
+
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       setUser(user);
@@ -77,7 +92,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, userData, loading, login }}>
+    <AuthContext.Provider value={{ user, userData, loading, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
