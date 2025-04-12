@@ -1,4 +1,3 @@
-import { initializeApp } from 'firebase/app';
 import { 
   getFirestore,
   collection,
@@ -1594,7 +1593,7 @@ export const getAnnouncements = async (): Promise<Announcement[]> => {
 export const updateAnnouncement = async (id: string, updates: Partial<Announcement>): Promise<void> => {
   try {
     const announcementRef = doc(db, 'announcements', id);
-    const updatedData = {
+    const updatedData: any = {
       ...updates,
       updatedAt: Timestamp.now()
     };
