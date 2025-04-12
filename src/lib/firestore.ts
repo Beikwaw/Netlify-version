@@ -34,7 +34,8 @@ export const SleepoverStatus = {
 export const MaintenanceStatus = {
   PENDING: 'pending',
   IN_PROGRESS: 'in_progress',
-  COMPLETED: 'completed'
+  COMPLETED: 'completed',
+  DENIED: 'denied'
 } as const;
 
 export const ComplaintStatus = {
