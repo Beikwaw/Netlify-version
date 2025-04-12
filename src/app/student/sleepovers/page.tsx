@@ -11,6 +11,15 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { Badge } from '@/components/ui/badge';
 import Link from 'next/link';
+import { Timestamp } from 'firebase/firestore';
+
+// Add helper function to convert Timestamp to Date
+const convertTimestampToDate = (timestamp: Date | Timestamp): Date => {
+  if (timestamp instanceof Timestamp) {
+    return timestamp.toDate();
+  }
+  return timestamp;
+};
 
 export default function SleepoversPage() {
   const { user } = useAuth();
@@ -132,8 +141,8 @@ export default function SleepoversPage() {
             <div key={guest.id} className="bg-white p-4 rounded-lg shadow">
               <h3 className="font-semibold">{guest.guestName} {guest.guestSurname}</h3>
               <p>Room: {guest.roomNumber}</p>
-              <p>Check-in: {format(guest.startDate, 'PPP')}</p>
-              <p>Check-out: {format(guest.endDate, 'PPP')}</p>
+              <p>Check-in: {format(convertTimestampToDate(guest.startDate), 'PPP')}</p>
+              <p>Check-out: {format(convertTimestampToDate(guest.endDate), 'PPP')}</p>
               <button
                 onClick={() => setSelectedRequest(guest)}
                 className="mt-2 bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600"
