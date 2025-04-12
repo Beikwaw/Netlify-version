@@ -116,5 +116,19 @@ export default function StudentSleepoverHistoryPage() {
                 </div>
 
                 <div className="text-right">
-                  <span
-                    className={`
+                  <span className={`px-3 py-1 rounded-full text-sm ${
+                    request.status === 'approved' ? 'bg-green-100 text-green-800' :
+                    request.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
+                    'bg-red-100 text-red-800'
+                  }`}>
+                    {request.status.charAt(0).toUpperCase() + request.status.slice(1)}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
