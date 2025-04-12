@@ -24,7 +24,7 @@ export default function DailyReport({ tenantCode, date }: DailyReportProps) {
   const fetchReport = async () => {
     setIsLoading(true);
     try {
-      const dailyReport = await generateDailyReport(tenantCode, date);
+      const dailyReport = await generateDailyReport(date);
       setReport(dailyReport);
     } catch (error) {
       console.error('Error fetching report:', error);
