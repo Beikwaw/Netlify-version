@@ -5,6 +5,7 @@ import { getMySleepoverRequests, SleepoverRequest } from '@/lib/firestore';
 import { useAuth } from '@/lib/auth';
 import { format } from 'date-fns';
 import Link from 'next/link';
+import { Timestamp } from 'firebase/firestore';
 
 export default function StudentSleepoverHistoryPage() {
   const { user } = useAuth();
@@ -28,6 +29,13 @@ export default function StudentSleepoverHistoryPage() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const formatDate = (date: Date | Timestamp) => {
+    if (date instanceof Timestamp) {
+      return format(date.toDate(), 'PPP');
+    }
+    return format(date, 'PPP');
   };
 
   if (loading) {
@@ -93,11 +101,11 @@ export default function StudentSleepoverHistoryPage() {
                     </div>
                     <div>
                       <p className="font-medium">Check-in</p>
-                      <p>{format(request.startDate, 'PPP')}</p>
+                      <p>{formatDate(request.startDate)}</p>
                     </div>
                     <div>
                       <p className="font-medium">Check-out</p>
-                      <p>{format(request.endDate, 'PPP')}</p>
+                      <p>{formatDate(request.endDate)}</p>
                     </div>
                   </div>
 
