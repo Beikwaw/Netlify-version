@@ -70,7 +70,9 @@ export function MaintenanceRequestForm({ userId, onSuccess, onCancel, userData }
       });
       
       toast.success('Maintenance request submitted successfully');
-      onSuccess();
+      if (onSuccess) {
+        onSuccess();
+      }
     } catch (error) {
       console.error('Error submitting maintenance request:', error);
       toast.error('Failed to submit maintenance request');
