@@ -48,9 +48,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         id: user.uid,
         name: user.displayName || 'User',
         email: user.email || '',
-        role: role || 'newbie',
+        surname: '',
+        full_name: user.displayName || 'User',
+        role: 'newbie',
         applicationStatus: 'pending',
         createdAt: new Date(),
+        updatedAt: new Date(),
+        place_of_study: '',
+        room_number: '',
+        tenant_code: '',
+        isGuest: false
       } as UserData;
     } catch (error) {
       console.error('Login error:', error);
@@ -76,11 +83,19 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         // Here you would typically fetch the user's data from Firestore
         // For now, we'll just set some mock data
         setUserData({
+          id: user.uid,
           name: user.displayName || 'User',
           email: user.email || '',
+          surname: '',
+          full_name: user.displayName || 'User',
           role: 'newbie',
           applicationStatus: 'pending',
           createdAt: new Date(),
+          updatedAt: new Date(),
+          place_of_study: '',
+          room_number: '',
+          tenant_code: '',
+          isGuest: false
         });
       } else {
         setUserData(null);
