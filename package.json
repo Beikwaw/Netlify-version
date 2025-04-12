@@ -7,7 +7,6 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "postbuild": "next-on-netlify",
     "type-check": "tsc --noEmit"
   },
   "dependencies": {
@@ -49,6 +48,7 @@
     "zod": "^3.24.2"
   },
   "devDependencies": {
+    "@netlify/plugin-nextjs": "^5.10.5",
     "@types/dotenv": "^6.1.1",
     "@types/jest": "^29.5.14",
     "@types/node": "^20.11.17",
