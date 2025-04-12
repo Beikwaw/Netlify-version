@@ -11,6 +11,15 @@ import { useRouter } from 'next/navigation';
 import { toast } from 'sonner';
 import { SleepoverRequest } from '@/lib/firestore';
 import { Badge } from '@/components/ui/badge';
+import { Timestamp } from 'firebase/firestore';
+
+// Add helper function to convert Timestamp to Date
+const convertTimestampToDate = (timestamp: Date | Timestamp): Date => {
+  if (timestamp instanceof Timestamp) {
+    return timestamp.toDate();
+  }
+  return timestamp;
+};
 
 export default function SleepoverHistoryPage() {
   const { user } = useAuth();
@@ -119,9 +128,9 @@ export default function SleepoverHistoryPage() {
                   <div className="grid gap-2">
                     <p><strong>Room Number:</strong> {request.roomNumber}</p>
                     <p><strong>Guest Phone:</strong> {request.guestPhoneNumber}</p>
-                    <p><strong>Check-in:</strong> {format(new Date(request.startDate), 'PPP')}</p>
-                    <p><strong>Check-out:</strong> {format(new Date(request.endDate), 'PPP')}</p>
-                    <p><strong>Submitted:</strong> {format(new Date(request.createdAt), 'PPP p')}</p>
+                    <p><strong>Check-in:</strong> {format(convertTimestampToDate(request.startDate), 'PPP')}</p>
+                    <p><strong>Check-out:</strong> {format(convertTimestampToDate(request.endDate), 'PPP')}</p>
+                    <p><strong>Submitted:</strong> {format(convertTimestampToDate(request.createdAt), 'PPP p')}</p>
                     {request.status === 'approved' && !request.signOutTime && (
                       <div className="mt-4">
                         <Button
@@ -156,9 +165,9 @@ export default function SleepoverHistoryPage() {
                 <div className="grid gap-2">
                   <p><strong>Room Number:</strong> {request.roomNumber}</p>
                   <p><strong>Guest Phone:</strong> {request.guestPhoneNumber}</p>
-                  <p><strong>Check-in:</strong> {format(new Date(request.startDate), 'PPP')}</p>
-                  <p><strong>Check-out:</strong> {format(new Date(request.endDate), 'PPP')}</p>
-                  <p><strong>Submitted:</strong> {format(new Date(request.createdAt), 'PPP p')}</p>
+                  <p><strong>Check-in:</strong> {format(convertTimestampToDate(request.startDate), 'PPP')}</p>
+                  <p><strong>Check-out:</strong> {format(convertTimestampToDate(request.endDate), 'PPP')}</p>
+                  <p><strong>Submitted:</strong> {format(convertTimestampToDate(request.createdAt), 'PPP p')}</p>
                   {request.signOutTime && (
                     <div className="mt-2 p-3 bg-green-50 rounded-md">
                       <p><strong>Checked Out:</strong> {format(new Date(request.signOutTime), 'PPP p')}</p>
