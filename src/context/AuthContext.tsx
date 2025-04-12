@@ -3,11 +3,11 @@
 import React, { createContext, useContext, useEffect, useState } from 'react';
 import { User, onAuthStateChanged } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
-import { AdminData } from '@/lib/firestore';
+import { UserData } from '@/lib/firestore';
 
 interface AuthContextType {
   user: User | null;
-  userData: AdminData | null;
+  userData: UserData | null;
   loading: boolean;
 }
 
@@ -19,7 +19,7 @@ const AuthContext = createContext<AuthContextType>({
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [user, setUser] = useState<User | null>(null);
-  const [userData, setUserData] = useState<AdminData | null>(null);
+  const [userData, setUserData] = useState<UserData | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -29,9 +29,11 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         // Here you would typically fetch the user's data from Firestore
         // For now, we'll just set some mock data
         setUserData({
-          name: user.displayName || 'Admin User',
+          name: user.displayName || 'User',
           email: user.email || '',
-          role: 'admin',
+          role: 'newbie',
+          applicationStatus: 'pending',
+          createdAt: new Date(),
         });
       } else {
         setUserData(null);

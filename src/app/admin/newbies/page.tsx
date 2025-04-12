@@ -22,7 +22,7 @@ export default function NewbiesPage() {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
 
   useEffect(() => {
-    if (!userData?.role || userData.role === 'student' || userData.role === 'newbie') {
+    if (!userData || !['admin', 'superadmin'].includes(userData.role)) {
       toast.error('Unauthorized access');
       router.push('/portals/admin');
       return;
@@ -59,7 +59,7 @@ export default function NewbiesPage() {
     }
   };
 
-  if (!userData?.role || userData.role === 'student' || userData.role === 'newbie') {
+  if (!userData?.role || !['admin', 'superadmin'].includes(userData.role)) {
     return (
       <div className="flex items-center justify-center min-h-screen">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-gray-900"></div>

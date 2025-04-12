@@ -2158,3 +2158,27 @@ export async function deactivateStudent(studentId: string) {
     throw error;
   }
 }
+
+export const markAnnouncementAsShown = async (announcementId: string, userId: string): Promise<void> => {
+  try {
+    const announcementRef = doc(db, 'announcements', announcementId);
+    const userRef = doc(db, 'users', userId);
+    
+    const batch = writeBatch(db);
+    
+    // Update the announcement's shown status for this user
+    batch.update(announcementRef, {
+      shownTo: arrayUnion(userId)
+    });
+    
+    // Update the user's seen announcements
+    batch.update(userRef, {
+      seenAnnouncements: arrayUnion(announcementId)
+    });
+    
+    await batch.commit();
+  } catch (error) {
+    console.error('Error marking announcement as shown:', error);
+    throw error;
+  }
+};
