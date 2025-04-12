@@ -166,8 +166,8 @@ export default function SleepoversPage() {
                     <h3 className="font-semibold">{request.guestName} {request.guestSurname}</h3>
                     <p>Room: {request.roomNumber}</p>
                     <p>Status: <span className={`font-semibold ${request.status === 'approved' ? 'text-green-600' : request.status === 'rejected' ? 'text-red-600' : 'text-yellow-600'}`}>{request.status}</span></p>
-                    <p>Check-in: {format(request.startDate, 'PPP')}</p>
-                    <p>Check-out: {format(request.endDate, 'PPP')}</p>
+                    <p>Check-in: {format(convertTimestampToDate(request.startDate), 'PPP')}</p>
+                    <p>Check-out: {format(convertTimestampToDate(request.endDate), 'PPP')}</p>
                     {request.additionalGuests && request.additionalGuests.length > 0 && (
                       <div className="mt-2">
                         <p className="font-medium">Additional Guests:</p>
