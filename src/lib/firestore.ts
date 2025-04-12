@@ -42,7 +42,8 @@ export const ComplaintStatus = {
   PENDING: 'pending',
   IN_PROGRESS: 'in_progress',
   RESOLVED: 'resolved',
-  REJECTED: 'rejected'
+  REJECTED: 'rejected',
+  DENIED: 'denied'
 } as const;
 
 export const ManagementStatus = {
@@ -1682,7 +1683,8 @@ export const generateDetailedReport = async (tenantCode: string, date: Date): Pr
         id: doc.id,
         studentName: data.studentName || '',
         date: convertTimestampToDate(data.createdAt),
-        status: data.status === SleepoverStatus.APPROVED ? 'resolved' : data.status === SleepoverStatus.DENIED ? 'denied' : 'pending',
+        status: data.status === SleepoverStatus.APPROVED ? 'resolved' as const : 
+                data.status === SleepoverStatus.DENIED ? 'denied' as const : 'pending' as const,
         details: data.details || ''
       };
     });
@@ -1701,7 +1703,8 @@ export const generateDetailedReport = async (tenantCode: string, date: Date): Pr
         id: doc.id,
         studentName: data.studentName || '',
         date: convertTimestampToDate(data.createdAt),
-        status: data.status === MaintenanceStatus.COMPLETED ? 'resolved' : data.status === MaintenanceStatus.DENIED ? 'denied' : 'pending',
+        status: data.status === MaintenanceStatus.COMPLETED ? 'resolved' as const : 
+                data.status === MaintenanceStatus.DENIED ? 'denied' as const : 'pending' as const,
         details: data.description || ''
       };
     });
@@ -1720,7 +1723,8 @@ export const generateDetailedReport = async (tenantCode: string, date: Date): Pr
         id: doc.id,
         studentName: data.studentName || '',
         date: convertTimestampToDate(data.createdAt),
-        status: data.status === ComplaintStatus.RESOLVED ? 'resolved' : data.status === ComplaintStatus.DENIED ? 'denied' : 'pending',
+        status: data.status === ComplaintStatus.RESOLVED ? 'resolved' as const : 
+                data.status === ComplaintStatus.DENIED ? 'denied' as const : 'pending' as const,
         details: data.description || ''
       };
     });
