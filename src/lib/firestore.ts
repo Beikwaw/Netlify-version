@@ -196,19 +196,20 @@ export interface DailyReport {
   sleepovers: {
     total: number;
     pending: number;
-    approved: number;
+    resolved: number;
     denied: number;
   };
   maintenance: {
     total: number;
     pending: number;
-    inProgress: number;
-    completed: number;
+    resolved: number;
+    denied: number;
   };
   complaints: {
     total: number;
     pending: number;
     resolved: number;
+    denied: number;
   };
 }
 
@@ -1636,19 +1637,20 @@ export async function generateDailyReport(date: Date = new Date()): Promise<Dail
       sleepovers: {
         total: sleepovers.length,
         pending: sleepovers.filter(s => s.status === SleepoverStatus.PENDING).length,
-        approved: sleepovers.filter(s => s.status === SleepoverStatus.APPROVED).length,
+        resolved: sleepovers.filter(s => s.status === SleepoverStatus.APPROVED).length,
         denied: sleepovers.filter(s => s.status === SleepoverStatus.DENIED).length
       },
       maintenance: {
         total: maintenance.length,
         pending: maintenance.filter(m => m.status === MaintenanceStatus.PENDING).length,
-        inProgress: maintenance.filter(m => m.status === MaintenanceStatus.IN_PROGRESS).length,
-        completed: maintenance.filter(m => m.status === MaintenanceStatus.COMPLETED).length
+        resolved: maintenance.filter(m => m.status === MaintenanceStatus.COMPLETED).length,
+        denied: maintenance.filter(m => m.status === MaintenanceStatus.DENIED).length
       },
       complaints: {
         total: complaints.length,
         pending: complaints.filter(c => c.status === ComplaintStatus.PENDING).length,
-        resolved: complaints.filter(c => c.status === ComplaintStatus.RESOLVED).length
+        resolved: complaints.filter(c => c.status === ComplaintStatus.RESOLVED).length,
+        denied: complaints.filter(c => c.status === ComplaintStatus.DENIED).length
       }
     }
   } catch (error) {
