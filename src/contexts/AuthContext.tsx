@@ -1,3 +1,5 @@
+'use client';
+
 import { createContext, useContext, useEffect, useState } from 'react';
 import { UserData } from '@/lib/firestore';
 import { db } from '@/lib/firebase';

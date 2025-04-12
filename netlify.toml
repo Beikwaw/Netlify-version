@@ -5,11 +5,12 @@
 [build.environment]
   NEXT_RUNTIME = "nodejs18.x"
   NODE_VERSION = "18"
+  NEXT_USE_NETLIFY_EDGE = "true"
 
 [[plugins]]
   package = "@netlify/plugin-nextjs"
 
 [[redirects]]
   from = "/*"
-  to = "/index.html"
+  to = "/.netlify/functions/nextjs-server"
   status = 200 

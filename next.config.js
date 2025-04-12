@@ -9,6 +9,7 @@ const nextConfig = {
       allowedOrigins: ['localhost:3000', '*.netlify.app'],
     },
   },
+  output: 'standalone',
   env: {
     NEXT_PUBLIC_FIREBASE_API_KEY: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
     NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: process.env.NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN,
