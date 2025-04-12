@@ -60,9 +60,15 @@ export function SleepoverRequestForm({ userId, onSuccess, onCancel, userData }: 
     try {
       await createSleepoverRequest({
         userId,
-        ...formData,
-        startDate: new Date(formData.startDate),
-        endDate: new Date(formData.endDate),
+        guestName: formData.guestName,
+        guestSurname: formData.guestSurname,
+        guestEmail: '',
+        guestPhone: formData.guestPhoneNumber,
+        relationship: '',
+        checkInDate: formData.startDate,
+        checkOutDate: formData.endDate,
+        roomNumber: formData.roomNumber,
+        tenantCode: formData.tenantCode,
         status: 'pending'
       });
       toast.success('Sleepover request submitted successfully');
