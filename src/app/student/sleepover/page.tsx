@@ -7,6 +7,9 @@ import { db } from '@/lib/firebase';
 import { toast } from 'react-hot-toast';
 import { getMySleepoverRequests, SleepoverRequest } from '@/lib/firestore';
 import { Loader2 } from 'lucide-react';
+import { format } from 'date-fns';
+import Link from 'next/link';
+import { Timestamp } from 'firebase/firestore';
 
 export default function StudentSleepoverPage() {
   const { user, userData } = useAuth();
@@ -156,6 +159,13 @@ export default function StudentSleepoverPage() {
         i === index ? { ...guest, [field]: value } : guest
       )
     }));
+  };
+
+  const formatDate = (date: Date | Timestamp) => {
+    if (date instanceof Timestamp) {
+      return date.toDate().toLocaleDateString();
+    }
+    return date.toLocaleDateString();
   };
 
   if (!user || !userData) {
@@ -355,8 +365,8 @@ export default function StudentSleepoverPage() {
                     <div>
                       <h3 className="font-medium">{request.guestName} {request.guestSurname}</h3>
                       <p className="text-sm text-gray-600">Room: {request.roomNumber}</p>
-                      <p className="text-sm text-gray-600">Start: {new Date(request.startDate).toLocaleDateString()}</p>
-                      <p className="text-sm text-gray-600">End: {new Date(request.endDate).toLocaleDateString()}</p>
+                      <p className="text-sm text-gray-600">Start: {formatDate(request.startDate)}</p>
+                      <p className="text-sm text-gray-600">End: {formatDate(request.endDate)}</p>
                       <span className={`inline-block px-2 py-1 rounded-full text-xs mt-2 ${
                         request.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
                         request.status === 'approved' ? 'bg-green-100 text-green-800' :
