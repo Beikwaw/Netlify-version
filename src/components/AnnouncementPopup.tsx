@@ -3,6 +3,7 @@ import { format } from "date-fns";
 import type { Announcement } from "@/types/announcement";
 import { markAnnouncementAsShown } from "@/lib/firestore";
 import { useEffect } from "react";
+import { useAuth } from "@/context/AuthContext";
 
 interface AnnouncementPopupProps {
   announcement: Announcement;
@@ -11,11 +12,13 @@ interface AnnouncementPopupProps {
 }
 
 export function AnnouncementPopup({ announcement, isOpen, onClose }: AnnouncementPopupProps) {
+  const { user } = useAuth();
+
   useEffect(() => {
-    if (isOpen && announcement && !announcement.isFirstTimeShown) {
-      markAnnouncementAsShown(announcement.id).catch(console.error);
+    if (isOpen && announcement && !announcement.isFirstTimeShown && user) {
+      markAnnouncementAsShown(announcement.id, user.uid).catch(console.error);
     }
-  }, [isOpen, announcement]);
+  }, [isOpen, announcement, user]);
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
