@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 import './globals.css';
-import { AuthProvider } from '@/context/AuthContext';
+import { AuthProvider } from '@/contexts/AuthContext';
 import { Toaster } from 'sonner';
 
 const poppins = Poppins({
