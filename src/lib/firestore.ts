@@ -224,20 +224,20 @@ export interface DetailedReport {
       id: string;
       studentName: string;
       date: Date;
-      status: SleepoverStatus;
+      status: 'pending' | 'denied' | 'resolved';
       details: string;
     }>;
   };
   maintenance: {
     total: number;
     pending: number;
-    inProgress: number;
-    completed: number;
+    resolved: number;
+    denied: number;
     items: Array<{
       id: string;
       title: string;
       description: string;
-      status: MaintenanceStatus;
+      status: 'pending' | 'denied' | 'resolved';
       createdAt: Date;
     }>;
   };
@@ -245,11 +245,12 @@ export interface DetailedReport {
     total: number;
     pending: number;
     resolved: number;
+    denied: number;
     items: Array<{
       id: string;
       title: string;
       description: string;
-      status: ComplaintStatus;
+      status: 'pending' | 'denied' | 'resolved';
       createdAt: Date;
     }>;
   };
@@ -1677,10 +1678,10 @@ export const generateDetailedReport = async (tenantCode: string, date: Date): Pr
     const sleepovers = sleepoversSnapshot.docs.map(doc => {
       const data = doc.data();
       return {
-      id: doc.id,
+        id: doc.id,
         studentName: data.studentName || '',
         date: convertTimestampToDate(data.createdAt),
-        status: data.status as SleepoverStatus,
+        status: data.status === SleepoverStatus.APPROVED ? 'resolved' : data.status === SleepoverStatus.DENIED ? 'denied' : 'pending',
         details: data.details || ''
       };
     });
@@ -1696,10 +1697,10 @@ export const generateDetailedReport = async (tenantCode: string, date: Date): Pr
     const maintenance = maintenanceSnapshot.docs.map(doc => {
       const data = doc.data();
       return {
-      id: doc.id,
+        id: doc.id,
         title: data.title || '',
         description: data.description || '',
-        status: data.status as MaintenanceStatus,
+        status: data.status === MaintenanceStatus.COMPLETED ? 'resolved' : data.status === MaintenanceStatus.DENIED ? 'denied' : 'pending',
         createdAt: convertTimestampToDate(data.createdAt)
       };
     });
@@ -1715,10 +1716,10 @@ export const generateDetailedReport = async (tenantCode: string, date: Date): Pr
     const complaints = complaintsSnapshot.docs.map(doc => {
       const data = doc.data();
       return {
-      id: doc.id,
+        id: doc.id,
         title: data.title || '',
         description: data.description || '',
-        status: data.status as ComplaintStatus,
+        status: data.status === ComplaintStatus.RESOLVED ? 'resolved' : data.status === ComplaintStatus.DENIED ? 'denied' : 'pending',
         createdAt: convertTimestampToDate(data.createdAt)
       };
     });
@@ -1727,22 +1728,23 @@ export const generateDetailedReport = async (tenantCode: string, date: Date): Pr
       date,
       sleepovers: {
         total: sleepovers.length,
-        resolved: sleepovers.filter(s => s.status === SleepoverStatus.APPROVED).length,
-        denied: sleepovers.filter(s => s.status === SleepoverStatus.DENIED).length,
-        pending: sleepovers.filter(s => s.status === SleepoverStatus.PENDING).length,
+        resolved: sleepovers.filter(s => s.status === 'resolved').length,
+        denied: sleepovers.filter(s => s.status === 'denied').length,
+        pending: sleepovers.filter(s => s.status === 'pending').length,
         items: sleepovers
       },
       maintenance: {
         total: maintenance.length,
-        pending: maintenance.filter(m => m.status === MaintenanceStatus.PENDING).length,
-        inProgress: maintenance.filter(m => m.status === MaintenanceStatus.IN_PROGRESS).length,
-        completed: maintenance.filter(m => m.status === MaintenanceStatus.COMPLETED).length,
+        resolved: maintenance.filter(m => m.status === 'resolved').length,
+        denied: maintenance.filter(m => m.status === 'denied').length,
+        pending: maintenance.filter(m => m.status === 'pending').length,
         items: maintenance
       },
       complaints: {
         total: complaints.length,
-        pending: complaints.filter(c => c.status === ComplaintStatus.PENDING).length,
-        resolved: complaints.filter(c => c.status === ComplaintStatus.RESOLVED).length,
+        resolved: complaints.filter(c => c.status === 'resolved').length,
+        denied: complaints.filter(c => c.status === 'denied').length,
+        pending: complaints.filter(c => c.status === 'pending').length,
         items: complaints
       }
     };
