@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { TriangleAlert } from 'lucide-react';
+import { AlertTriangle } from 'lucide-react';
 import { ComplaintForm } from '@/components/forms/ComplaintForm';
 import { useAuth } from '@/lib/auth';
 import { getComplaints, type Complaint } from '@/lib/firestore';
@@ -107,7 +107,7 @@ export default function ComplaintsPage() {
       ) : (
         <Card className='w-full md:w-[50%]'>
           <CardHeader className='flex flex-row items-center'>
-            <TriangleAlert className='h-6 w-6'/>
+            <AlertTriangle className='h-6 w-6'/>
             <div className='flex flex-col'>
               <CardTitle className='text-2xl font-bold'>New Complaint</CardTitle>
               <p className='text-sm text-gray-500'>Submit a new complaint</p>
@@ -213,7 +213,7 @@ export default function ComplaintsPage() {
       <div className='flex flex-col md:flex-row w-full md:w-[50%] gap-5'>
         <Card className='w-full'>
           <CardHeader className='flex flex-row items-center'>
-            <TriangleAlert className='h-6 w-6'/>
+            <AlertTriangle className='h-6 w-6'/>
             <div className='flex flex-col'>
               <CardTitle className='text-2xl font-bold'>Your Complaints</CardTitle>
               <p className='text-sm text-gray-500'>Track the status of your complaints</p>
