@@ -65,7 +65,7 @@ export function MaintenanceRequestForm({ userId, onSuccess, onCancel, userData }
         category: data.category,
         roomNumber: data.roomNumber,
         tenantCode: data.tenantCode,
-        preferredDate: data.preferredDate,
+        preferredDate: new Date(data.preferredDate),
         timeSlot: data.timeSlot
       });
       
