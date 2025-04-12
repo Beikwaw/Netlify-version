@@ -264,7 +264,8 @@ export interface Announcement {
   userId: string;
   createdBy: string;
   createdByName: string;
-  status: 'active' | 'expired' | 'deleted';
+  status: 'active' | 'archived';
+  isFirstTimeShown?: boolean;
 }
 
 export interface GuestRequest {
