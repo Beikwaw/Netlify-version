@@ -2183,3 +2183,22 @@ export const markAnnouncementAsShown = async (announcementId: string, userId: st
     throw error;
   }
 };
+
+export const subscribeToSleepoverRequests = (
+  userId: string,
+  callback: (requests: SleepoverRequest[]) => void
+) => {
+  const q = query(
+    collection(db, 'sleepover_requests'),
+    where('userId', '==', userId),
+    orderBy('createdAt', 'desc')
+  );
+
+  return onSnapshot(q, (snapshot) => {
+    const requests = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data()
+    })) as SleepoverRequest[];
+    callback(requests);
+  });
+};
