@@ -217,9 +217,9 @@ export interface DetailedReport {
   date: Date;
   sleepovers: {
     total: number;
-    pending: number;
     resolved: number;
     denied: number;
+    pending: number;
     items: Array<{
       id: string;
       studentName: string;
@@ -230,28 +230,28 @@ export interface DetailedReport {
   };
   maintenance: {
     total: number;
-    pending: number;
     resolved: number;
     denied: number;
+    pending: number;
     items: Array<{
       id: string;
-      title: string;
-      description: string;
+      studentName: string;
+      date: Date;
       status: 'pending' | 'denied' | 'resolved';
-      createdAt: Date;
+      details: string;
     }>;
   };
   complaints: {
     total: number;
-    pending: number;
     resolved: number;
     denied: number;
+    pending: number;
     items: Array<{
       id: string;
-      title: string;
-      description: string;
+      studentName: string;
+      date: Date;
       status: 'pending' | 'denied' | 'resolved';
-      createdAt: Date;
+      details: string;
     }>;
   };
 }
